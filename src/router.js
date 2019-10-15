@@ -6,7 +6,8 @@ Vue.use(Router);
 export default new Router({
   mode: "history",
   base: process.env.BASE_URL,
-  routes: [{
+  routes: [
+    {
       path: "/",
       name: "home",
       meta: {
@@ -77,6 +78,6 @@ export default new Router({
         layout: "main"
       },
       component: () => import("./views/Record.vue")
-    },
+    }
   ]
 });
