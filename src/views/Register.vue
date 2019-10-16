@@ -46,8 +46,8 @@
           >Пароль должен быть больше {{ this.$v.password.$params.minLength.min }} символов</small>
         </div>
         <div class="input-field">
-          <input 
-            id="name" 
+          <input
+            id="name"
             type="text"
             v-model.trim="name"
             :class="{
@@ -61,8 +61,8 @@
             v-if="($v.name.$dirty && !$v.name.required)"
             class="helper-text invalid"
           >Введите имя</small>
-          <small 
-            v-else-if="($v.name.$dirty && !$v.name.required)" 
+          <small
+            v-else-if="($v.name.$dirty && !$v.name.required)"
             class="helper-text invalid"
           >Имя должен быть больше {{ this.$v.name.$params.minLength.min }} символов</small>
         </div>
@@ -108,7 +108,7 @@ export default {
     agree: { checked: value => value }
   },
   methods: {
-    submitHandler() {
+    async submitHandler() {
       if (this.$v.$invalid) {
         this.$v.$touch();
         return;
@@ -118,8 +118,10 @@ export default {
         password: this.password,
         name: this.name
       };
-      console.log(formData);
-      this.$router.push("/");
+      try {
+        await this.$store.dispatch("register", formData);
+        this.$router.push("/");
+      } catch (error) {}
     }
   }
 };
