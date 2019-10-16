@@ -15,13 +15,19 @@
             }"
           />
           <label for="email">Email</label>
-          <small v-if="($v.email.$dirty && !$v.email.required)" class="helper-text invalid">Введите Email</small>
-          <small v-else-if="($v.email.$dirty && !$v.email.email)" class="helper-text invalid">Введите корректный Email</small>
+          <small
+            v-if="($v.email.$dirty && !$v.email.required)"
+            class="helper-text invalid"
+          >Введите Email</small>
+          <small
+            v-else-if="($v.email.$dirty && !$v.email.email)"
+            class="helper-text invalid"
+          >Введите корректный Email</small>
         </div>
         <div class="input-field">
-          <input 
-            id="password" 
-            type="password" 
+          <input
+            id="password"
+            type="password"
             v-model.trim="password"
             :class="{
               invalid:
@@ -30,18 +36,14 @@
             }"
           />
           <label for="password">Пароль</label>
-          <small 
-            v-if="($v.password.$dirty && !$v.password.required)" 
+          <small
+            v-if="($v.password.$dirty && !$v.password.required)"
             class="helper-text invalid"
-          >
-            Введите пароль
-          </small>
-          <small 
+          >Введите пароль</small>
+          <small
             v-else-if="($v.password.$dirty && !$v.password.minLength)"
             class="helper-text invalid"
-          >
-            Пароль должен быть больше {{ this.$v.password.$params.minLength.min }} символов
-          </small>
+          >Пароль должен быть больше {{ this.$v.password.$params.minLength.min }} символов</small>
         </div>
       </div>
       <div class="card-action">
@@ -80,17 +82,21 @@ export default {
     }
   },
   methods: {
-    submitHandler() {
+    async submitHandler() {
       if (this.$v.$invalid) {
         this.$v.$touch();
         return;
       }
+
       const formData = {
         email: this.email,
         password: this.password
-      }
-      console.log(formData);
-      this.$router.push("/");
+      };
+
+      try {
+        await this.$store.dispatch("login", formData);
+        this.$router.push("/");
+      } catch (error) {}
     }
   }
 };
