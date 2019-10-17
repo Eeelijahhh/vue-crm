@@ -13,6 +13,7 @@
           <CategoryEdit 
             :categories="categories"
             @updated="updateCategories"
+            @deleted="deleteCategory"
             :key="categories.length + updateCount"
             v-if="categories.length"
           />
@@ -47,6 +48,10 @@ export default {
      this.categories[index].title = updatedCategory.title;
      this.categories[index].limit = updatedCategory.limit;
      this.updateCount++;
+    },
+    deleteCategory(deletedCategoryId) {
+      const index = this.categories.findIndex(category => category.id === deletedCategoryId);
+      this.categories.splice(index, 1);
     }
   },
   components: {

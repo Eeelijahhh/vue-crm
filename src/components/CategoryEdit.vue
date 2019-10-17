@@ -44,9 +44,14 @@
         >Минимальное значение {{ $v.limit.$params.minValue.min }}</span>
       </div>
 
-      <button class="btn waves-effect waves-light" type="submit">
+      <button class="btn btn-margin waves-effect waves-light" type="submit">
         Изменить
         <i class="material-icons right">send</i>
+      </button>
+
+      <button class="btn waves-effect red darken-1" type="button" @click="deleteCategory">
+        Удалить
+        <i class="material-icons right">delete</i>
       </button>
     </form>
   </div>
@@ -69,16 +74,25 @@ export default {
           id: this.current,
           title: this.title,
           limit: this.limit
-        }
+        };
         await this.$store.dispatch("updateCategory", categoryData);
         this.$message(`Категория успешно изменена`);
         this.$emit("updated", categoryData);
+      } catch (error) {}
+    },
+    async deleteCategory() {
+      try {
+        await this.$store.dispatch("deleteCategory", this.current);
+        this.$message(`Категория «${this.title}» была успешно удалена`);
+        this.$emit("deleted", this.current);
       } catch (error) {}
     }
   },
   watch: {
     current(currentCategoryId) {
-      const { title, limit } = this.categories.find(category => category.id === currentCategoryId);
+      const { title, limit } = this.categories.find(
+        category => category.id === currentCategoryId
+      );
       this.title = title;
       this.limit = limit;
     }
@@ -99,3 +113,9 @@ export default {
   }
 };
 </script>
+
+<style lang="scss">
+.btn-margin {
+  margin-right: 1rem;
+}
+</style>
