@@ -24,12 +24,12 @@
           id="limit"
           type="number"
           v-model.number="limit"
-          :class="{ invalid: $v.limit.$dirty && !$v.limit.minValue }"
+          :class="{ invalid: ($v.limit.$dirty && !$v.limit.minValue) || ($v.limit.$dirty && !$v.limit.required) }"
         />
         <label for="limit">Лимит</label>
         <span
           class="helper-text invalid"
-          v-if="$v.limit.$dirty && !$v.limit.minValue"
+          v-if="($v.limit.$dirty && !$v.limit.minValue) || ($v.limit.$dirty && !$v.limit.required)"
         >Минимальное значение {{ $v.limit.$params.minValue.min }}</span>
       </div>
 
@@ -43,25 +43,12 @@
 
 <script>
 import { required, minValue } from "vuelidate/lib/validators";
+import CategoryFormValidation from "@/mixins/categoryFormValidation";
 
 export default {
-  data: () => ({
-    title: "",
-    limit: 1
-  }),
-  validations: {
-    title: { required },
-    limit: { minValue: minValue(1) }
-  },
-  mounted() {
-    M.updateTextFields();
-  },
+  mixins: [CategoryFormValidation],
   methods: {
-    async submitHandler() {
-      if (this.$v.$invalid) {
-        this.$v.$touch();
-        return;
-      }
+    async validFormHandler() {
       try {
         const category = await this.$store.dispatch("createCategory", {
           title: this.title,
