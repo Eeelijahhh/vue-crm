@@ -5,7 +5,8 @@
       <Sidebar v-model="isOpen" />
       <main class="app-content" :class="{ full: !isOpen }">
         <div class="app-page">
-          <router-view />
+          <Loader v-if="loading" />
+          <router-view v-else />
         </div>
       </main>
       <div class="fixed-action-btn">
@@ -24,13 +25,16 @@ import Sidebar from "@/components/app/Sidebar";
 export default {
   name: "main-layout",
   data: () => ({
-    isOpen: true
+    isOpen: true,
+    loading: true
   }),
   async mounted() {
     // User's info is empty
     if (!Object.keys(this.$store.getters.info).length) {
       await this.$store.dispatch("fetchInfo");
     }
+
+    this.loading = false
   },
   components: {
     Navbar,

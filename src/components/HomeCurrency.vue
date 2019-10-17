@@ -14,13 +14,22 @@
         </thead>
 
         <tbody>
-          <tr>
-            <td>руб</td>
-            <td>12121</td>
-            <td>12.12.12</td>
+          <tr v-for="currency of currencies" :key="currency">
+            <td>{{ currency }}</td>
+            <td>{{ rates[currency] }}</td>
+            <td>{{ date | date("date") }}</td>
           </tr>
         </tbody>
       </table>
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  props: ["rates", "date"],
+  data: () => ({
+    currencies: ["EUR", "USD", "RUB"] 
+  })
+}
+</script>
