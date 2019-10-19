@@ -16,6 +16,7 @@
       <div
         v-for="category of categories"
         :key="category.id"
+        v-tooltip="category.tooltip"
       >
         <p>
           <strong>{{ category.title }}:</strong>
@@ -34,7 +35,9 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters } from "vuex";
+import currencyFilter from "@/filters/currency.filter";
+
 export default {
   data: () => ({
     loading: true,
@@ -61,11 +64,14 @@ export default {
         : percent < 100
           ? "yellow"
           : "red"
+      const tooltipValue = category.limit - spend;
+      const tooltip = `${tooltipValue < 0 ? "Превышение на" : "Осталось"} ${currencyFilter(Math.abs(tooltipValue))}`
       return {
         ...category,
         progressPercent,
         progressColor,
-        spend
+        spend,
+        tooltip
       }
     })
     this.loading = false;
