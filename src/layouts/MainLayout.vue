@@ -29,7 +29,7 @@ export default {
     loading: true
   }),
   async mounted() {
-    // User's info is empty
+    // User's info is not empty
     if (!Object.keys(this.$store.getters.info).length) {
       await this.$store.dispatch("fetchInfo");
     }

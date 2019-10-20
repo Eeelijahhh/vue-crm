@@ -19,12 +19,9 @@ Vue.config.productionTip = false;
 
 Vue.use(Vuelidate);
 Vue.use(messagePlugin);
-
 Vue.filter("date", dateFilter);
 Vue.filter("currency", currencyFilter);
-
 Vue.directive("tooltip", tooltipDirective);
-
 Vue.component("Loader", Loader);
 
 firebase.initializeApp({
