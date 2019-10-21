@@ -18,7 +18,7 @@
       >
         <td>{{ index + 1 }}</td>
         <td>{{ record.amount | currency }}</td>
-        <td>{{ record.date | date("datetime") }}</td>
+        <td>{{ record.date | date("date") }}</td>
         <td>{{ record.categoryName }}</td>
         <td>
           <span 

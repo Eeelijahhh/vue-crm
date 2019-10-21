@@ -11,7 +11,7 @@ export default {
         throw error;
       }
     },
-        async fetchRecords({ commit, dispatch }) {
+    async fetchRecords({ commit, dispatch }) {
       try {
         const userId = await dispatch("getUserId");
         const records = (await firebase.database().ref(`/users/${userId}/records`).once("value")).val() || {};
@@ -21,6 +21,16 @@ export default {
         commit("setError", error);
         throw error;
       }
-    }
+    },
+    async fetchRecordById({ commit, dispatch }, id) {
+      try {
+        const userId = await dispatch("getUserId");
+        const record = (await firebase.database().ref(`/users/${userId}/records`).child(id).once("value")).val() || {};
+        return { ...record, id }
+      } catch (error) {
+        commit("setError", error);
+        throw error;
+      }
+    },
   }
 }
