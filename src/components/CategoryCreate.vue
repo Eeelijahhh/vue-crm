@@ -51,11 +51,10 @@
 </template>
 
 <script>
-import { required, minValue } from 'vuelidate/lib/validators'
-import CategoryFormValidation from '@/mixins/categoryFormValidation'
+import categoryFormValidationMixin from '@/mixins/categoryFormValidation.mixin'
 
 export default {
-  mixins: [CategoryFormValidation],
+  mixins: [categoryFormValidationMixin],
   methods: {
     async validFormHandler() {
       try {

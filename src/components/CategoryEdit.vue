@@ -72,11 +72,11 @@
 </template>
 
 <script>
-import CategoryFormValidation from '@/mixins/categoryFormValidation'
+import categoryFormValidationMixin from '@/mixins/categoryFormValidation.mixin'
 
 export default {
   props: ['categories'],
-  mixins: [CategoryFormValidation],
+  mixins: [categoryFormValidationMixin],
   data: () => ({
     select: null,
     current: null

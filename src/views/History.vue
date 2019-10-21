@@ -6,18 +6,14 @@
 
     <Loader v-if="loading" />
 
-    <p class="center" v-else-if="!records.length">
-      Записей пока нет.
-      <router-link to="/record">Добавить новую запись</router-link>
-    </p>
-
-    <div v-else>
+    <div v-else-if="records.length">
       <div class="history-chart">
         <canvas></canvas>
       </div>
 
       <section>
         <HistoryTable :records="items" />
+
         <Paginate
           v-model="page"
           :page-count="pageCount"
@@ -26,10 +22,14 @@
           :next-text="nextText"
           :container-class="containerClass"
           :page-class="pageClass"
-        >
-        </Paginate>
+        ></Paginate>
       </section>
     </div>
+
+    <p class="center" v-else>
+      Записей пока нет.
+      <router-link to="/record">Добавить новую запись</router-link>
+    </p>
   </div>
 </template>
 
@@ -52,9 +52,7 @@ export default {
       this.records.map(record => {
         return {
           ...record,
-          categoryName: categories.find(
-            category => category.id === record.categoryId
-          ).title,
+          categoryName: categories.find(category => category.id === record.categoryId).title,
           typeClass: record.type === 'income' ? 'green' : 'red',
           typeText: record.type === 'income' ? 'Доход' : 'Расход'
         }
