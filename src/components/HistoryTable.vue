@@ -27,12 +27,14 @@
           >{{ record.typeText }}</span>
         </td>
         <td>
-          <button 
+          <router-link
+            tag="button" 
+            :to="`/detail/${record.id}`"
             class="btn-small btn"
             v-tooltip="'Посмотреть запись'"
           >
             <i class="material-icons">open_in_new</i>
-          </button>
+          </router-link>
         </td>
       </tr>
     </tbody>
