@@ -17,7 +17,7 @@
           <tr v-for="currency of currencies" :key="currency">
             <td>{{ currency }}</td>
             <td>{{ rates[currency] }}</td>
-            <td>{{ date | date("date") }}</td>
+            <td>{{ date | date('date') }}</td>
           </tr>
         </tbody>
       </table>
@@ -27,9 +27,9 @@
 
 <script>
 export default {
-  props: ["rates", "date"],
+  props: ['rates', 'date'],
   data: () => ({
-    currencies: ["EUR", "USD", "RUB"] 
+    currencies: ['EUR', 'USD', 'RUB']
   })
 }
 </script>

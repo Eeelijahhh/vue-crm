@@ -10,7 +10,7 @@
           <CategoryCreate @created="addNewCategory" />
         </div>
         <div class="col s12 m6">
-          <CategoryEdit 
+          <CategoryEdit
             :categories="categories"
             @updated="updateCategories"
             @deleted="deleteCategory"
@@ -25,37 +25,42 @@
 </template>
 
 <script>
-import CategoryCreate from "@/components/CategoryCreate";
-import CategoryEdit from "@/components/CategoryEdit";
+import CategoryCreate from '@/components/CategoryCreate'
+import CategoryEdit from '@/components/CategoryEdit'
 
 export default {
-  name: "categories",
+  name: 'categories',
   data: () => ({
     categories: [],
     loading: true,
     updateCount: 0
   }),
   async mounted() {
-    this.categories = await this.$store.dispatch("fetchCategories");
-    this.loading = false;
+    this.categories = await this.$store.dispatch('fetchCategories')
+    this.loading = false
   },
   methods: {
     addNewCategory(category) {
-      this.categories.push(category);
+      this.categories.push(category)
     },
     updateCategories(updatedCategory) {
-     const index = this.categories.findIndex(category => category.id === updatedCategory.id);
-     this.categories[index].title = updatedCategory.title;
-     this.categories[index].limit = updatedCategory.limit;
-     this.updateCount++;
+      const index = this.categories.findIndex(
+        category => category.id === updatedCategory.id
+      )
+      this.categories[index].title = updatedCategory.title
+      this.categories[index].limit = updatedCategory.limit
+      this.updateCount++
     },
     deleteCategory(deletedCategoryId) {
-      const index = this.categories.findIndex(category => category.id === deletedCategoryId);
-      this.categories.splice(index, 1);
+      const index = this.categories.findIndex(
+        category => category.id === deletedCategoryId
+      )
+      this.categories.splice(index, 1)
     }
   },
   components: {
-    CategoryCreate, CategoryEdit
+    CategoryCreate,
+    CategoryEdit
   }
 }
 </script>

@@ -12,23 +12,19 @@
     </thead>
 
     <tbody>
-      <tr 
-        v-for="(record, index) of records"
-        :key="record.id"
-      >
+      <tr v-for="(record, index) of records" :key="record.id">
         <td>{{ index + 1 }}</td>
         <td>{{ record.amount | currency }}</td>
-        <td>{{ record.date | date("date") }}</td>
+        <td>{{ record.date | date('date') }}</td>
         <td>{{ record.categoryName }}</td>
         <td>
-          <span 
-            class="white-text badge"
-            :class="[record.typeClass]"
-          >{{ record.typeText }}</span>
+          <span class="white-text badge" :class="[record.typeClass]">{{
+            record.typeText
+          }}</span>
         </td>
         <td>
           <router-link
-            tag="button" 
+            tag="button"
             :to="`/detail/${record.id}`"
             class="btn-small btn"
             v-tooltip="'Посмотреть запись'"

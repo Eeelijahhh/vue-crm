@@ -3,11 +3,7 @@
     <div class="card-content white-text">
       <span class="card-title">Счет в валюте</span>
 
-      <p 
-        class="currency-line"
-        v-for="currency of currencies"
-        :key="currency"
-      >
+      <p class="currency-line" v-for="currency of currencies" :key="currency">
         <span>{{ getCurrency(currency) | currency(currency) }}</span>
       </p>
     </div>
@@ -16,9 +12,9 @@
 
 <script>
 export default {
-  props: ["rates"],
+  props: ['rates'],
   data: () => ({
-    currencies: ["EUR", "USD", "RUB"]
+    currencies: ['EUR', 'USD', 'RUB']
   }),
   methods: {
     getCurrency(currency) {

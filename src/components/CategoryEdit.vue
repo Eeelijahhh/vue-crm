@@ -11,7 +11,8 @@
             v-for="category of categories"
             :key="category.id"
             :value="category.id"
-          >{{ category.title }}</option>
+            >{{ category.title }}</option
+          >
         </select>
         <label>Выберите категорию</label>
       </div>
@@ -27,7 +28,8 @@
         <span
           class="helper-text invalid"
           v-if="$v.title.$dirty && !$v.title.required"
-        >Введите название категории</span>
+          >Введите название категории</span
+        >
       </div>
 
       <div class="input-field">
@@ -35,13 +37,21 @@
           id="limitEdit"
           type="number"
           v-model.number="limit"
-          :class="{ invalid: ($v.limit.$dirty && !$v.limit.minValue) || ($v.limit.$dirty && !$v.limit.required) }"
+          :class="{
+            invalid:
+              ($v.limit.$dirty && !$v.limit.minValue) ||
+              ($v.limit.$dirty && !$v.limit.required)
+          }"
         />
         <label for="limitEdit">Лимит</label>
         <span
           class="helper-text invalid"
-          v-if="($v.limit.$dirty && !$v.limit.minValue) || ($v.limit.$dirty && !$v.limit.required)"
-        >Минимальное значение {{ $v.limit.$params.minValue.min }}</span>
+          v-if="
+            ($v.limit.$dirty && !$v.limit.minValue) ||
+              ($v.limit.$dirty && !$v.limit.required)
+          "
+          >Минимальное значение {{ $v.limit.$params.minValue.min }}</span
+        >
       </div>
 
       <button class="btn btn-margin waves-effect waves-light" type="submit">
@@ -49,7 +59,11 @@
         <i class="material-icons right">send</i>
       </button>
 
-      <button class="btn waves-effect red darken-1" type="button" @click="deleteCategory">
+      <button
+        class="btn waves-effect red darken-1"
+        type="button"
+        @click="deleteCategory"
+      >
         Удалить
         <i class="material-icons right">delete</i>
       </button>
@@ -58,10 +72,10 @@
 </template>
 
 <script>
-import CategoryFormValidation from "@/mixins/categoryFormValidation";
+import CategoryFormValidation from '@/mixins/categoryFormValidation'
 
 export default {
-  props: ["categories"],
+  props: ['categories'],
   mixins: [CategoryFormValidation],
   data: () => ({
     select: null,
@@ -74,17 +88,17 @@ export default {
           id: this.current,
           title: this.title,
           limit: this.limit
-        };
-        await this.$store.dispatch("updateCategory", categoryData);
-        this.$message(`Категория успешно изменена`);
-        this.$emit("updated", categoryData);
+        }
+        await this.$store.dispatch('updateCategory', categoryData)
+        this.$message(`Категория успешно изменена`)
+        this.$emit('updated', categoryData)
       } catch (error) {}
     },
     async deleteCategory() {
       try {
-        await this.$store.dispatch("deleteCategory", this.current);
-        this.$message(`Категория «${this.title}» была успешно удалена`);
-        this.$emit("deleted", this.current);
+        await this.$store.dispatch('deleteCategory', this.current)
+        this.$message(`Категория «${this.title}» была успешно удалена`)
+        this.$emit('deleted', this.current)
       } catch (error) {}
     }
   },
@@ -92,26 +106,26 @@ export default {
     current(currentCategoryId) {
       const { title, limit } = this.categories.find(
         category => category.id === currentCategoryId
-      );
-      this.title = title;
-      this.limit = limit;
+      )
+      this.title = title
+      this.limit = limit
     }
   },
   created() {
-    const { title, limit, id } = this.categories[0];
-    this.current = id;
-    this.title = title;
-    this.limit = limit;
+    const { title, limit, id } = this.categories[0]
+    this.current = id
+    this.title = title
+    this.limit = limit
   },
   mounted() {
-    this.select = M.FormSelect.init(this.$refs.select);
+    this.select = M.FormSelect.init(this.$refs.select)
   },
   destroyed() {
     if (this.select && this.select.destroy) {
-      this.select.destroy();
+      this.select.destroy()
     }
   }
-};
+}
 </script>
 
 <style lang="scss">

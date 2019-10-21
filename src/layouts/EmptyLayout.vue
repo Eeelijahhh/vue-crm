@@ -5,16 +5,16 @@
 </template>
 
 <script>
-import messages from "@/utils/messages";
-import { mapGetters } from "vuex";
+import messages from '@/utils/messages'
+import { mapGetters } from 'vuex'
 
 export default {
   computed: {
-    ...mapGetters(["error"])
+    ...mapGetters(['error'])
   },
   watch: {
     error(firebaseError) {
-      this.$error(messages[firebaseError.code] || "Что то пошло не так!");
+      this.$error(messages[firebaseError.code] || 'Что то пошло не так!')
     }
   }
 }

@@ -20,9 +20,13 @@
 export default {
   computed: {
     color() {
-      const colors = ["spinner-blue-only", "spinner-red-only", "spinner-green-only"];
+      const colors = [
+        'spinner-blue-only',
+        'spinner-red-only',
+        'spinner-green-only'
+      ]
       return colors[Math.floor(Math.random() * 3)]
     }
   }
-};
+}
 </script>

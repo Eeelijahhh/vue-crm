@@ -5,7 +5,7 @@
         <a href="#" @click.prevent="$emit('click')">
           <i class="material-icons black-text">dehaze</i>
         </a>
-        <span class="black-text">{{ date | date("datetime") }}</span>
+        <span class="black-text">{{ date | date('datetime') }}</span>
       </div>
 
       <ul class="right hide-on-small-and-down">
@@ -15,7 +15,8 @@
             href="#"
             data-target="dropdown"
             ref="dropdown"
-          > {{ name }}
+          >
+            {{ name }}
             <i class="material-icons right">arrow_drop_down</i>
           </a>
 
@@ -47,8 +48,8 @@ export default {
   }),
   methods: {
     async logout() {
-      await this.$store.dispatch("logout");
-      this.$router.push("/login?message=logout");
+      await this.$store.dispatch('logout')
+      this.$router.push('/login?message=logout')
     }
   },
   computed: {
@@ -58,18 +59,18 @@ export default {
   },
   mounted() {
     this.interval = setInterval(() => {
-      this.date = new Date();
-    }, 1000);
+      this.date = new Date()
+    }, 1000)
     this.dropdown = M.Dropdown.init(this.$refs.dropdown, {
       coverTrigger: false,
       constrainWidth: false
-    });
+    })
   },
   beforeDestroy() {
-    clearInterval(this.interval);
+    clearInterval(this.interval)
     if (this.dropdown && this.dropdown.destroy) {
-      this.dropdown.destroy();
+      this.dropdown.destroy()
     }
   }
-};
+}
 </script>

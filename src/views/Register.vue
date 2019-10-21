@@ -16,13 +16,15 @@
           />
           <label for="email">Email</label>
           <small
-            v-if="($v.email.$dirty && !$v.email.required)"
+            v-if="$v.email.$dirty && !$v.email.required"
             class="helper-text invalid"
-          >Введите Email</small>
+            >Введите Email</small
+          >
           <small
-            v-else-if="($v.email.$dirty && !$v.email.email)"
+            v-else-if="$v.email.$dirty && !$v.email.email"
             class="helper-text invalid"
-          >Введите корректный Email</small>
+            >Введите корректный Email</small
+          >
         </div>
         <div class="input-field">
           <input
@@ -37,13 +39,16 @@
           />
           <label for="password">Пароль</label>
           <small
-            v-if="($v.password.$dirty && !$v.password.required)"
+            v-if="$v.password.$dirty && !$v.password.required"
             class="helper-text invalid"
-          >Введите пароль</small>
+            >Введите пароль</small
+          >
           <small
-            v-else-if="($v.password.$dirty && !$v.password.minLength)"
+            v-else-if="$v.password.$dirty && !$v.password.minLength"
             class="helper-text invalid"
-          >Пароль должен быть больше {{ this.$v.password.$params.minLength.min }} символов</small>
+            >Пароль должен быть больше
+            {{ this.$v.password.$params.minLength.min }} символов</small
+          >
         </div>
         <div class="input-field">
           <input
@@ -58,13 +63,16 @@
           />
           <label for="name">Имя</label>
           <small
-            v-if="($v.name.$dirty && !$v.name.required)"
+            v-if="$v.name.$dirty && !$v.name.required"
             class="helper-text invalid"
-          >Введите имя</small>
+            >Введите имя</small
+          >
           <small
-            v-else-if="($v.name.$dirty && !$v.name.required)"
+            v-else-if="$v.name.$dirty && !$v.name.required"
             class="helper-text invalid"
-          >Имя должен быть больше {{ this.$v.name.$params.minLength.min }} символов</small>
+            >Имя должен быть больше
+            {{ this.$v.name.$params.minLength.min }} символов</small
+          >
         </div>
         <p>
           <label>
@@ -75,7 +83,10 @@
       </div>
       <div class="card-action">
         <div>
-          <button class="btn waves-effect waves-light auth-submit" type="submit">
+          <button
+            class="btn waves-effect waves-light auth-submit"
+            type="submit"
+          >
             Зарегистрироваться
             <i class="material-icons right">send</i>
           </button>
@@ -91,14 +102,14 @@
 </template>
 
 <script>
-import { email, required, minLength } from "vuelidate/lib/validators";
+import { email, required, minLength } from 'vuelidate/lib/validators'
 
 export default {
-  name: "register",
+  name: 'register',
   data: () => ({
-    email: "",
-    password: "",
-    name: "",
+    email: '',
+    password: '',
+    name: '',
     agree: false
   }),
   validations: {
@@ -110,19 +121,19 @@ export default {
   methods: {
     async submitHandler() {
       if (this.$v.$invalid) {
-        this.$v.$touch();
-        return;
+        this.$v.$touch()
+        return
       }
       const formData = {
         email: this.email,
         password: this.password,
         name: this.name
-      };
+      }
       try {
-        await this.$store.dispatch("register", formData);
-        this.$router.push("/");
+        await this.$store.dispatch('register', formData)
+        this.$router.push('/')
       } catch (error) {}
     }
   }
-};
+}
 </script>

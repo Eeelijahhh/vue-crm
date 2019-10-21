@@ -19,11 +19,11 @@
 </template>
 
 <script>
-import Navbar from "@/components/app/Navbar";
-import Sidebar from "@/components/app/Sidebar";
+import Navbar from '@/components/app/Navbar'
+import Sidebar from '@/components/app/Sidebar'
 
 export default {
-  name: "main-layout",
+  name: 'main-layout',
   data: () => ({
     isOpen: true,
     loading: true
@@ -31,7 +31,7 @@ export default {
   async mounted() {
     // User's info is not empty
     if (!Object.keys(this.$store.getters.info).length) {
-      await this.$store.dispatch("fetchInfo");
+      await this.$store.dispatch('fetchInfo')
     }
 
     this.loading = false
@@ -40,5 +40,5 @@ export default {
     Navbar,
     Sidebar
   }
-};
+}
 </script>

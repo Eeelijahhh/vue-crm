@@ -16,7 +16,8 @@
         <span
           class="helper-text invalid"
           v-if="$v.title.$dirty && !$v.title.required"
-        >Введите название категории</span>
+          >Введите название категории</span
+        >
       </div>
 
       <div class="input-field">
@@ -24,13 +25,21 @@
           id="limit"
           type="number"
           v-model.number="limit"
-          :class="{ invalid: ($v.limit.$dirty && !$v.limit.minValue) || ($v.limit.$dirty && !$v.limit.required) }"
+          :class="{
+            invalid:
+              ($v.limit.$dirty && !$v.limit.minValue) ||
+              ($v.limit.$dirty && !$v.limit.required)
+          }"
         />
         <label for="limit">Лимит</label>
         <span
           class="helper-text invalid"
-          v-if="($v.limit.$dirty && !$v.limit.minValue) || ($v.limit.$dirty && !$v.limit.required)"
-        >Минимальное значение {{ $v.limit.$params.minValue.min }}</span>
+          v-if="
+            ($v.limit.$dirty && !$v.limit.minValue) ||
+              ($v.limit.$dirty && !$v.limit.required)
+          "
+          >Минимальное значение {{ $v.limit.$params.minValue.min }}</span
+        >
       </div>
 
       <button class="btn waves-effect waves-light" type="submit">
@@ -42,25 +51,25 @@
 </template>
 
 <script>
-import { required, minValue } from "vuelidate/lib/validators";
-import CategoryFormValidation from "@/mixins/categoryFormValidation";
+import { required, minValue } from 'vuelidate/lib/validators'
+import CategoryFormValidation from '@/mixins/categoryFormValidation'
 
 export default {
   mixins: [CategoryFormValidation],
   methods: {
     async validFormHandler() {
       try {
-        const category = await this.$store.dispatch("createCategory", {
+        const category = await this.$store.dispatch('createCategory', {
           title: this.title,
           limit: this.limit
-        });
-        this.title = "";
-        this.limit = 1;
-        this.$v.$reset();
-        this.$message(`Категория «${category.title}» была создана`);
-        this.$emit("created", category);
+        })
+        this.title = ''
+        this.limit = 1
+        this.$v.$reset()
+        this.$message(`Категория «${category.title}» была создана`)
+        this.$emit('created', category)
       } catch (error) {}
     }
   }
-};
+}
 </script>
