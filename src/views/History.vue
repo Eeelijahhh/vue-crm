@@ -7,9 +7,7 @@
     <Loader v-if="loading" />
 
     <div v-else-if="records.length">
-      <div class="history-chart">
-        <canvas></canvas>
-      </div>
+      <HistoryChart :records="records" :categories="categories" />
 
       <section>
         <HistoryTable :records="items" />
@@ -35,6 +33,7 @@
 
 <script>
 import HistoryTable from '@/components/HistoryTable'
+import HistoryChart from '@/components/HistoryChart'
 import paginationMixin from '@/mixins/pagination.mixin'
 
 export default {
@@ -42,17 +41,18 @@ export default {
   mixins: [paginationMixin],
   data: () => ({
     loading: true,
-    records: []
+    records: [],
+    categories: []
   }),
   async mounted() {
     this.records = await this.$store.dispatch('fetchRecords')
-    const categories = await this.$store.dispatch('fetchCategories')
+    this.categories = await this.$store.dispatch('fetchCategories')
 
     this.paginationSetup(
       this.records.map(record => {
         return {
           ...record,
-          categoryName: categories.find(category => category.id === record.categoryId).title,
+          categoryName: this.categories.find(category => category.id === record.categoryId).title,
           typeClass: record.type === 'income' ? 'green' : 'red',
           typeText: record.type === 'income' ? 'Доход' : 'Расход'
         }
@@ -61,7 +61,8 @@ export default {
     this.loading = false
   },
   components: {
-    HistoryTable
+    HistoryTable,
+    HistoryChart
   }
 }
 </script>
