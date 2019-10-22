@@ -1,4 +1,5 @@
 import firebase from 'firebase/app'
+import record from './record'
 
 export default {
   actions: {
@@ -36,6 +37,7 @@ export default {
           .ref(`/users/${userId}/categories`)
           .child(id)
           .remove()
+        await dispatch('deleteRecordsByCategoryId', id)
       } catch (error) {
         commit('setError', error)
         throw error

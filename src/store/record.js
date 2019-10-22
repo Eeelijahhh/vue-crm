@@ -2,7 +2,10 @@ import firebase from 'firebase/app'
 
 export default {
   actions: {
-    async createRecord({ dispatch, commit }, record) {
+    async createRecord({
+      dispatch,
+      commit
+    }, record) {
       try {
         const userId = await dispatch('getUserId')
         await firebase
@@ -14,7 +17,10 @@ export default {
         throw error
       }
     },
-    async fetchRecords({ commit, dispatch }) {
+    async fetchRecords({
+      commit,
+      dispatch
+    }) {
       try {
         const userId = await dispatch('getUserId')
         const records =
@@ -23,13 +29,19 @@ export default {
             .ref(`/users/${userId}/records`)
             .once('value')).val() || {}
         // tranform records array
-        return Object.keys(records).map(key => ({ ...records[key], id: key }))
+        return Object.keys(records).map(key => ({
+          ...records[key],
+          id: key
+        }))
       } catch (error) {
         commit('setError', error)
         throw error
       }
     },
-    async fetchRecordById({ commit, dispatch }, id) {
+    async fetchRecordById({
+      commit,
+      dispatch
+    }, id) {
       try {
         const userId = await dispatch('getUserId')
         const record =
@@ -38,7 +50,21 @@ export default {
             .ref(`/users/${userId}/records`)
             .child(id)
             .once('value')).val() || {}
-        return { ...record, id }
+        return {
+          ...record,
+          id
+        }
+      } catch (error) {
+        commit('setError', error)
+        throw error
+      }
+    },
+    async deleteRecordsByCategoryId({ commit, dispatch }, id) {
+      try {
+        const userId = await dispatch('getUserId')
+        const records = await dispatch('fetchRecords')
+        await records.filter(record => record.categoryId === id)
+          .forEach(record => firebase.database().ref(`/users/${userId}/records`).child(record.id).remove())
       } catch (error) {
         commit('setError', error)
         throw error
