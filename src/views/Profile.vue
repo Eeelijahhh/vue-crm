@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="page-title">
-      <h3>Профиль</h3>
+      <h3>{{ 'Profile' | localize }}</h3>
     </div>
 
     <form class="form" @submit.prevent="submitHandler">
@@ -13,6 +13,15 @@
           v-else-if="$v.name.$dirty && !$v.name.required"
           class="helper-text invalid"
         >Имя должен быть больше {{ this.$v.name.$params.minLength.min }} символов</small>
+      </div>
+
+      <div class="switch">
+        <label>
+          English
+          <input type="checkbox" v-model="isRuLocale" />
+          <span class="lever"></span>
+          Русский
+        </label>
       </div>
 
       <button class="btn waves-effect waves-light" type="submit">
@@ -30,7 +39,8 @@ import { required, minLength } from 'vuelidate/lib/validators'
 export default {
   name: 'profile',
   data: () => ({
-    name: ''
+    name: '',
+    isRuLocale: true
   }),
   computed: {
     ...mapGetters(['info'])
@@ -47,16 +57,24 @@ export default {
       }
       try {
         this.updateInfo({
-          name: this.name
+          name: this.name,
+          locale: this.isRuLocale ? 'ru-RU' : 'en-US'
         })
       } catch (error) {}
     }
   },
   mounted() {
     this.name = this.info.name
+    this.isRuLocale = this.info.locale === 'ru-RU'
     setTimeout(() => {
       M.updateTextFields()
     })
   }
 }
 </script>
+
+<style lang="scss" scoped>
+  .switch {
+    margin-bottom: 1rem;
+  }
+</style>
