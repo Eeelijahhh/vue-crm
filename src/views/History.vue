@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="page-title">
-      <h3>История записей</h3>
+      <h3>{{ 'History_RecordsHistory' | localize }}</h3>
     </div>
 
     <Loader v-if="loading" />
@@ -25,8 +25,8 @@
     </div>
 
     <p class="center" v-else>
-      Записей пока нет.
-      <router-link to="/record">Добавить новую запись</router-link>
+      {{ 'NoRecordsYet' | localize }}.
+      <router-link to="/record">{{ 'AddNewRecord' | localize }}</router-link>
     </p>
   </div>
 </template>
@@ -35,6 +35,7 @@
 import HistoryTable from '@/components/HistoryTable'
 import HistoryChart from '@/components/HistoryChart'
 import paginationMixin from '@/mixins/pagination.mixin'
+import localizeFilter from '@/filters/localize.filter'
 
 export default {
   name: 'history',
@@ -54,7 +55,7 @@ export default {
           ...record,
           categoryName: this.categories.find(category => category.id === record.categoryId).title,
           typeClass: record.type === 'income' ? 'green' : 'red',
-          typeText: record.type === 'income' ? 'Доход' : 'Расход'
+          typeText: record.type === 'income' ? localizeFilter('Income') : localizeFilter('Outcome')
         }
       })
     )

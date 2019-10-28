@@ -1,11 +1,12 @@
 import _ from 'lodash'
+import localizeFilter from '@/filters/localize.filter'
 
 export default {
   data() {
     return {
       pageCount: 0,
-      prevText: 'Назад',
-      nextText: 'Вперед',
+      prevText: localizeFilter('Pagination_Prev'),
+      nextText: localizeFilter('Pagination_Next'),
       containerClass: 'pagination',
       pageClass: 'waves-effect',
       page: +this.$route.query.page || 1,

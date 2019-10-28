@@ -7,6 +7,7 @@
 <script>
 import { Pie } from 'vue-chartjs'
 import currencyFilter from '@/filters/currency.filter'
+import localizeFilter from '@/filters/localize.filter'
 
 export default {
   props: {
@@ -25,7 +26,7 @@ export default {
       labels: this.categories.map(category => category.title),
       datasets: [
         {
-          label: 'Расходы по категориям',
+          label: localizeFilter('History_CostsbyCategories'),
           data: this.categories.map(category => {
             return this.records.reduce((total, record) => {
               if (category.id === record.categoryId && record.type === 'outcome') {

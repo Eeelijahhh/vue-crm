@@ -3,11 +3,11 @@
     <thead>
       <tr>
         <th>#</th>
-        <th>Сумма</th>
-        <th>Дата</th>
-        <th>Категория</th>
-        <th>Тип</th>
-        <th>Открыть</th>
+        <th>{{ 'History_Amount' | localize }}</th>
+        <th>{{ 'History_Date' | localize }}</th>
+        <th>{{ 'History_Category' | localize }}</th>
+        <th>{{ 'History_Type' | localize }}</th>
+        <th>{{ 'History_Open' | localize }}</th>
       </tr>
     </thead>
 
@@ -27,7 +27,7 @@
             tag="button"
             :to="`/detail/${record.id}`"
             class="btn-small btn"
-            v-tooltip="'Посмотреть запись'"
+            v-tooltip="viewRecord"
           >
             <i class="material-icons">open_in_new</i>
           </router-link>
@@ -38,12 +38,17 @@
 </template>
 
 <script>
+import localizeFilter from '@/filters/localize.filter'
+
 export default {
   props: {
     records: {
       type: Array,
       required: true
     }
-  }
+  },
+  data: () => ({
+    viewRecord: localizeFilter('History_ViewRecord')
+  })
 }
 </script>

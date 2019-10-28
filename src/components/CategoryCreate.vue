@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="page-subtitle">
-      <h4>Создать</h4>
+      <h4>{{ 'Category_Create' | localize }}</h4>
     </div>
 
     <form @submit.prevent="submitHandler">
@@ -12,11 +12,11 @@
           v-model="title"
           :class="{ invalid: $v.title.$dirty && !$v.title.required }"
         />
-        <label for="name">Название</label>
+        <label for="name">{{ 'Category_Name' | localize }}</label>
         <span
           class="helper-text invalid"
           v-if="$v.title.$dirty && !$v.title.required"
-          >Введите название категории</span
+          >{{ 'Category_EnterCategoryName' | localize }}</span
         >
       </div>
 
@@ -31,19 +31,19 @@
               ($v.limit.$dirty && !$v.limit.required)
           }"
         />
-        <label for="limit">Лимит</label>
+        <label for="limit">{{ 'Category_Limit' | localize }}</label>
         <span
           class="helper-text invalid"
           v-if="
             ($v.limit.$dirty && !$v.limit.minValue) ||
               ($v.limit.$dirty && !$v.limit.required)
           "
-          >Минимальное значение {{ $v.limit.$params.minValue.min }}</span
+          >{{ 'Category_MinValue' | localize }} {{ $v.limit.$params.minValue.min }}</span
         >
       </div>
 
       <button class="btn waves-effect waves-light" type="submit">
-        Создать
+        {{ 'Category_Create' | localize }}
         <i class="material-icons right">send</i>
       </button>
     </form>
@@ -52,6 +52,7 @@
 
 <script>
 import categoryFormValidationMixin from '@/mixins/categoryFormValidation.mixin'
+import localizeFilter from '@/filters/localize.filter'
 
 export default {
   mixins: [categoryFormValidationMixin],
@@ -65,7 +66,7 @@ export default {
         this.title = ''
         this.limit = 1
         this.$v.$reset()
-        this.$message(`Категория «${category.title}» была создана`)
+        this.$message(`${localizeFilter('Message_Category')} «${category.title}» ${localizeFilter('Message_Created')}`)
         this.$emit('created', category)
       } catch (error) {}
     }

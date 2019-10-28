@@ -1,14 +1,14 @@
 <template>
   <div>
     <div class="page-title">
-      <h3>Новая запись</h3>
+      <h3>{{ 'Record_NewRecord' | localize }}</h3>
     </div>
 
     <Loader v-if="loading" />
 
     <p class="center" v-else-if="!categories.length">
-      Категорий пока нет.
-      <router-link to="/categories">Добавить новую категорию</router-link>
+      {{ 'NoCategoriesYet' | localize }}
+      <router-link to="/categories">{{ 'AddNewCategory' | localize }}</router-link>
     </p>
 
     <form v-else class="form" @submit.prevent="submitHandler">
@@ -21,7 +21,7 @@
             >{{ category.title }}
           </option>
         </select>
-        <label>Выберите категорию</label>
+        <label>{{ 'Record_SelectCategory' | localize }}</label>
       </div>
 
       <p>
@@ -33,7 +33,7 @@
             value="income"
             v-model="type"
           />
-          <span>Доход</span>
+          <span>{{ 'Income' | localize }}</span>
         </label>
       </p>
 
@@ -46,7 +46,7 @@
             value="outcome"
             v-model="type"
           />
-          <span>Расход</span>
+          <span>{{ 'Outcome' | localize }}</span>
         </label>
       </p>
 
@@ -61,14 +61,14 @@
               ($v.amount.$dirty && !$v.amount.required)
           }"
         />
-        <label for="amount">Сумма</label>
+        <label for="amount">{{ 'Amount' | localize }}</label>
         <span
           class="helper-text invalid"
           v-if="
             ($v.amount.$dirty && !$v.amount.minValue) ||
               ($v.amount.$dirty && !$v.amount.required)
           "
-          >Минимальное значение {{ $v.amount.$params.minValue.min }}</span
+          >{{ 'Record_MinValue' | localize }} {{ $v.amount.$params.minValue.min }}</span
         >
       </div>
 
@@ -81,16 +81,16 @@
             invalid: $v.description.$dirty && !$v.description.required
           }"
         />
-        <label for="description">Описание</label>
+        <label for="description">{{ 'Record_Description' | localize }}</label>
         <span
           class="helper-text invalid"
           v-if="$v.description.$dirty && !$v.description.required"
-          >Введите описание</span
+          >{{ 'Record_EnterDescription' | localize }}</span
         >
       </div>
 
       <button class="btn waves-effect waves-light" type="submit">
-        Создать
+        {{ 'Record_Create' | localize }}
         <i class="material-icons right">send</i>
       </button>
     </form>
